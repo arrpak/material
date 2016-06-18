@@ -1,0 +1,55 @@
+---
+title: "Ejemplo de Grafos en R"
+author: "FJAG"
+date: "June 3, 2016"
+output: 
+  slidy_presentation: 
+    fig_caption: yes
+    keep_md: yes
+#output: html_document
+---
+
+```{r setup, include=FALSE}
+#knitr::opts_chunk$set(echo = FALSE) #no pone la sentencia
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+```
+
+# Inclusión de librerias
+
+
+```{r, eval=T,warning=FALSE,message=FALSE,echo=TRUE}
+library(igraph)
+library(reshape2)
+library(plyr)
+```
+
+
+Los ficheros originales se encuentran en  <https://github.com/juanbertgomez/Data_Science_R>.
+
+
+
+# Plot del Grafo  
+
+```{r vertex, fig.height=8, fig.width=9,fig.align='center',fig.show='asis'}
+k<-read.graph("/home/dsc/Downloads/Data_Science_R-master/karate.gml",
+format = c("gml")) 
+plot(k, vertex.size = 0.3)
+```
+
+
+# Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+```{r, results='asis'}
+knitr::kable(mtcars)
+```
+
+# Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+

@@ -1,0 +1,542 @@
+---
+title: Introducción a la probabilidad y la estadística
+author: Carlos J. Gil Bellosta
+date: 2016-02-11
+output: 
+  revealjs::revealjs_presentation:
+    theme: sky
+    highlight: pygments
+---
+
+# Introducción a la probabilidad
+
+
+## Los eventos: conjuntos de hechos que pueden ocurrir o no
+
+* Un _evento_ puede ocurrir o no (luego se le asignaran probabilidades de ocurrencia).
+* Los eventos son conjuntos:
+    - $A \cup B$: evento A o evento B
+    - $A \cap B$: evento A y evento B
+    - $\Omega; \emptyset$: cualquier evento; ningún evento 
+    - $\Omega \setminus A$: que no ocurra A (complementario)
+
+* Con los eventos se _opera_ como con conjuntos.
+
+
+## Variables aleatorias
+
+- Una variable aleatoria es una función que _genera eventos_
+- Los eventos que genera son del tipo $X < 7$ o $X = 7$
+- Por ejemplo, "que gane/pierda/empate el Real Madrid" puede escribirse de la forma $X = 1$ / $X = -1$ / $X = 0$
+- Que el Real Madrid no gane es el evento $X \in \{0, -1\}$
+- Casi siempre vamos a fijarnos en eventos _generados_ por variables aleatorias
+
+
+
+## Probabilidad: una función sobre conjuntos
+
+* La probabilidad es una función que asigna a conjuntos (eventos) un número entre 0 y 1: $P(A) = x, 0 \le x \le 1$.
+* Intuición de la probabilidad de un evento (Savage): 
+
+> La máxima cantidad de dinero que apostarías si alguien te ofreciese un euro si el evento en cuestión sucede.
+
+¡Piensa en euros!
+
+
+
+## Axiomas de probabilidad (Kolmogorov)
+
+- $P(A) \ge 0$.
+- $P(\Omega) = 1$ ($\Omega$ es _cualquier cosa_).
+- $P(\cup A_i) = \sum_i P(A_i)$ si los $A_i$ son eventos _mutuamente excluyentes_.
+
+Si los agentes son racionales, la probabilidad subjetiva (basada en apuestas) cumple estos axiomas.
+
+
+
+## El caso de Linda
+
+Linda is thirty-one years old, single, outspoken, and very bright. She majored in philosophy. As a student, she was deeply concerned with issues of discrimination and social justice, and also participated in anti-nuclear demonstrations...The respondents are asked to rank in order of likelihood various scenarios: Linda is 
+
+1. an elementary school teacher, 
+2. active in the feminist movement, 
+3. a bank teller, 
+4. an insurance salesperson, or 
+5. a bank teller also active in the feminist movement.
+
+
+
+## Azar, riesgo, incertidumbre
+
+- Azar: los eventos están acotados y el cálculo de la probabilidad es pura aritmética. P.e., lanzamientos de moneda, ruletas, dados, etc.
+- Incertidumbre y riesgo: universo no acotado de eventos, con cisnes negros, etc.
+
+> ¡Son muy distintos cualitativamente!
+
+
+
+## ¿Qué significa acertar?
+
+En ciencia de datos está de moda predecir y acertar; sin embargo, si alguien dice
+
+- la probabilidad de que llueva mañana es del 30%
+- la probabilidad de que Rajoy sea el próximo presidente es del 25%
+- la probabilidad de sacar dos caras en dos tiradas de dados es del 25%
+- la probabilidad de que una determinada transacción sea fraudulenta es del 10%
+
+¿cómo sabemos si _acierta_ o no _acierta_?
+
+
+
+## Independencia de eventos
+
+- Cualitativamente, dos eventos son independientes si sabe si uno ocurre no aporta información sobre si el otro ocurre también.
+- Cuantitativamente, $P(A \cap B) = P(A)P(B)$.
+
+
+* Ejercicios: 
+    * Piensa en dos eventos independientes; piensa en dos eventos no independientes.
+    * ¿cuál es la probabilidad de sacar dos caras consecutivas tirando una moneda?
+
+
+
+## Probabilidad condicional: cambio de universo
+
+* Cuando decimos $P(A)$ queremos decir $P(A | \Omega)$ (i.e., probabilidad dentro de un determinado universo).
+* ¡A veces el universo cambia! Típicamente, porque tenemos información adicional.
+* Ejemplo: ¿cuál es la probabilidad de que el Madrid gane el próximo partido? ¿Pero y si sabemos que Ronaldo está lesionado? 
+* En el caso anterior tenemos $\Omega^\prime \subset \Omega$ y dos probabilidades, $P(A|\Omega)$ y $P(A | \Omega^\prime)$.
+
+
+## Probabilidad condicional: más ejemplos
+
+* Tasa de paro femenina
+* Ganar más de 2000 euros al mes si no has acabado el bachillerato
+* Que suba el Ibex si se ha caído la bolsa china
+
+
+## Probabilidad condicional: cálculo de probabilidades
+
+* Para calcular $P(A|B)$ necesitamos $P(B)$ y $P(A \cap B)$; entonces, $P(A|B) = P(A \cap B) / P(B)$.
+* En la práctica, sin embargo, siempre te dan $P(A|B)$: tasa de paro femenina, etc.
+
+
+## Probabilidad condicional: probabilidad total
+
+* Sirve para calcular la probabilidad de un evento a partir de una serie de probabilidades condicionales
+* Probabilidad total: 
+$$P(A) = P(A | B) P(B) + P(A | B^\prime) P(B^\prime)$$
+donde $B^\prime$ es el complementario de $B$
+* Ejemplo: calcular la tasa de paro nacional si se conoce la masculina, la femenina y la proporción de hombres en la población activa.
+* ¡Es una media ponderada (por las probabilidades de $B$ y $B^\prime$)!
+
+
+
+
+# Distribuciones de probabilidad discretas
+
+## Axiomas de probabilidad y distribuciones
+
+- Los axiomas de probabilidad son la gramática; las distribuciones son el léxico
+- Si $A \subset B$, los axiomas de probabilidad te dicen que $P(A) \le P(B)$
+- Pero, ¿cuánto es $P(A)$ y $P(B)$?
+- ¿Cómo podemos asignar probabilidades a eventos?
+
+
+## Probabilidades sobre conjuntos finitos
+
+- Monedas: $P(H) = P(T) = 0.5$
+- Dados: $P(i) = 1/6, i= 1, \dots, 6$
+- Las probabilides pueden ser diferentes
+- Ejercicio: ¿Cuál es la probabilidad de sacar un 2 o un 6 tirando un dado? (Usa los axiomas de probabilidad)
+- Ejercicio: ¿Cuál es la probabilidad de no sacar un 1 tirando un dado?
+- Ejercicio: ¿Cuál es la probabilidad de no sacar ningún 1 después de tirar n dados? (Usa la independencia)
+
+
+
+## Probabilidades sobre conjuntos finitos en R
+
+- Monedas: `rbinom(10, 1, 0.5)` (10 tiradas independientes)
+- Dados: `sample(1:6, 10, replace = T)`
+- Aproximación de la probabilidad de sacar un 2 o un 6 tirando dados: 
+```{r}
+mean(sample(1:6, 10000, replace = T) %in% c(2,6))
+```
+- Ejercicio: ¿sabrías calcular esa probabilidad a mano?
+- Ejercicio: estudia `?sample` para ver cómo muestrear números con probabilidades desiguales.
+
+
+## Un ejercicio: peces en un lago
+
+En un lago hay 1000 peces. Capturas 100, los marcas y los tiras de nuevo al lago. Luego capturas otros 100 y cuentas cuántos tienen marca.
+
+Calcula una aproximación a la probabilidad de que haya 10 peces marcados en la segunda captura. 
+
+Pista: selecciona dos veces 100 elementos de entre 1000 y cuenta las coincidencias.
+
+Una mejora: si lo piensas bien, solo hace falta seleccionar una vez, no dos (y la simulación es más rápida).
+
+
+
+## Distribución de Bernoulli
+
+- Es la de una moneda con probabilidad $p$ de cara.
+- Solo toma valores en 0 y 1.
+- En R se muestrea haciendo `rbinom(1, 1, p)`.
+- Ejercicios:
+    - ¿Cuál es su media? ¿Su varianza?
+    - ¿Cómo se pueden estimar esas magnitudes en R (para un valor dado de $p$)?
+    - ¿Cómo es su histograma?
+- ¡Es la base de muchos modelos de clasificación!
+
+
+
+## Distribución binomial
+
+- Es la distribución de una suma de muestras de la de Bernoulli
+- Ej.: ¿cuántas caras obtengo después de tirar una moneda 15 veces?
+- En R, `rbinom(1, 15, 0.5)`, que es lo mismo que `sum(rbinom(15, 1, 0.5))`.
+- ¿Cuál es su media y su varianza?
+- ¿Qué pinta tiene su histograma?
+
+
+
+## Distribución de Poisson
+
+- Es para conteos de eventos independientes: número de mujeres asesinadas, de llamadas telefónicas, número de compras que hace un cliente, etc.
+- A diferencia de la binomial, no hay límite superior
+- Depende de un parámetro que es la media (¡y la varianza!)
+- En R, `rpois(1000, 7)`
+- Ejercicio: estima la media y la varianza de la distribución de Poisson
+- `rpois(1000, 7)` es aproximadamente `rbinom(1000, 1000000, 7/1000000)`
+- Ejercicio: representa ambos histogramas y ver que efectivamente, se parecen.
+
+
+
+# Distribuciones de probabilidad continuas
+
+
+## Eventos y distribuciones continuas
+
+- Probabilidad de que mañana la bolsa baje más del 1%
+- Probabilidad de que alguien sin estudios gane más de 3000 euros al mes
+- Probabilidad de que alguien mida más de 1.90 y pese menos de 80 kilos
+- Probabilidad de que una mujer de 80 años tenga una tensión arterial entre a y b
+- Probabilidad de que alguien sano tenga una concentración de urea en la sangre superior a x
+
+
+## Función de densidad
+
+```{r, echo = FALSE}
+foo <- function(x) dgamma(x, 3, 4)
+curve(foo, 0, 4, main = "Densidad de una gamma (3,4)", ylab = "")
+abline(h = 0)
+abline(v = 1.5, col = "red")
+```
+
+
+## Propiedades de la densidad
+
+- Siempre es positiva ($\ge 0$)
+- Su integral es 1 (su integral es $P(\Omega)$)
+- Su integral entre a y b es la probabilidad del evento $a < x < b$
+- En R, la densidad es la función `d.*` (`dnorm`, `dgamma`, etc.)
+
+
+
+## La función de probabilidad
+
+- Hay eventos muy imporantes: $X < a$
+- La función de probabilidad es precisamente $F(a) = P(X < a)$
+- Nota: la probabilidad de $X < a$ o $X > b$ es $F(a) + 1 - F(b)$. Este evento es muy importante: es la probabilidad de obtener resultados _raros_: o muy altos o muy bajos.
+- En R, la función de probabilidad es la `p.*` (`pnorm`, `pgamma`, etc.)
+- La función de probabilidad crece de 0 a 1
+
+
+
+## La función de cuantiles
+
+- Es la inversa de la de probabilidad
+- ¿Cuál es el número $a$ por debajo del cual la probabilidad es inferior a, p.e., 5%?
+- En R, la función de cuantiles es la `q.*` (`qnorm`, `qgamma`, etc.)
+- E.j.: el cuantil correspondiente a 0.5 es la mediana
+
+
+
+## Nota: funciones d, p y q para distribuciones discretas
+
+- Las distribuciones discretas también tienen asociadas estas funciones
+- Aunque, generalmente, se usen menos (¡generalmente!)
+- Digamos que tienen más sentido para distribuciones continuas
+- Ejemplo: supongamos que el número de mujeres asesinadas en España sigue una Poisson de parámetro 60. ¿Cuál es la probabilidad de que un año mueran asesinadas más de 75 mujeres?
+
+
+
+## Distribuciones "con nombre"
+
+- Cada evento tiene su propia distribución de densidad (de la que se deducen la de probabilidad, etc.)
+- P.e., el número de $l/m^2$ que lloverá mañana (que es una _mezcla_ una distribución discreta y una continua y, casi seguro, tiene un pico grande en 0).
+- No obstante, algunas distribuciones tienen nombre
+- Son útiles porque algunos (¡no tantos!) procesos se comportan como ellas.
+- También porque sus características pueden ser extrapolables a otras parecidas a ellas (aunque no lo sean exactamente).
+
+
+
+## Distribución normal
+
+- Es un _atractor_ de distribuciones
+- P.e., la media de muestras grandes de una binomial se parece mucho a una normal (verifícalo usando histogramas)
+- Aparece en errores de medida, efectos que dependen de la confluencia de otros muchos pequeños, etc.
+- P.e., el error en las encuestas puede suponerse _normal_ (es como el ejemplo de la binomial de arriba)
+- La binomial depende dos parámetros: media y varianza
+- En R, es `.norm` (`dnorm`, etc.)
+- Tiene colas finas: ¡sin _outliers_!
+- Es simétrica
+
+
+
+## Distribución t
+
+- Se parece mucho a la normal (simétrica, acampanada)
+- Pero tiene colas más largas (¡outliers!)
+- Depende de un parámetro `df`
+- Cuanto más grande es `df`, más se parece a la normal (más finas son las colas)
+- Cuando `df = 1` se la conoce también como distribución de Cauchy
+- ¡La distribución de Cauchy no tiene media!
+- Ejercicio: simula un movimiento browniano con incrementos normales y luego sustituye la normal por una distribución t.
+
+
+
+## Distribución lognormal
+
+- Es la exponencial de una distribución normal
+- El histograma es `hist(exp(rnorm(1000)))` (con los parámetros 0 y 1 por defecto).
+- Es asimétrica, con una cola _larga_ por la derecha
+
+
+
+## Distribución beta
+
+- Toma valores entre 0 y 1
+- Es la distribución de una proporción sobre la que se tiene incertidumbre
+- Puede ser más o menos simétrica, más o menos _picuda_
+
+
+## Distribución uniforme
+
+- Su densidad 0 en todas partes menos entre a y b (0 y 1 por defecto)
+- En ese rango tiene el valor $1 / (b -a)$
+- Todos los valores de ese rango son equiprobables
+
+
+
+## ¿Qué distribución tienen mis datos?
+
+- Un problema típico es determinar la distribución de unos datos
+- (O la que más se parezca a ellos)
+- O ver, p.e., si son o no normales (véase `ks.test`)
+- No vamos a hablar de este problema
+- Es mejor suponer que los datos tienen la distribución... que tienen
+
+
+## Mezclas de distribuciones
+
+- Por ejemplo, alturas de personas (que es  la mezcla de la de los hombres y las mujeres)
+- Permiten generar muchas distribuciones _ad hoc_ a partir de distribuciones _base_
+- Muestreo de una mezcla de distribuciones:
+  - Se toma un valor aleatorio (p.e., discreto)
+  - Se simula de la distribución correspondiente a dicho valor
+  
+  
+## Distribuciones modeladas por simulación
+
+* Pérdidas por siniestros en una compañía se seguros:
+    * El número de siniestros (por mes) es Poisson
+    * El impacto económico es lognormal
+    * ¿Cuál es la distribución del impacto económico de los siniestros por mes?
+* Ventas digitales
+    * El número de visitas diarias es Poisson
+    * El número de ventas es una proporción fija (y pequeña)
+    * El precio de venta es lognormal
+
+
+
+# Introducción a la estadística
+
+## La probabilidad es deductiva...
+
+- Si la probabilidad de $H$ es $p$, _deduce_ la probabilidad de $HHT$
+- Si $X$ tiene una distribución $N(0,1)$, calcula $P(X > 3)$
+- Etc.
+- ¡Los parámetros están dados!
+
+
+## La estadística es inductiva (o abductiva)
+
+- Si he tirado una moneda al aire 100 veces y me han salido 60 caras, ¿me fío de que $p=0.5$?
+- En estadística tienes datos y te interesa conocer los parámetros.
+- Esos parámetros son los que _gobiernan_ el fenómeno aleatorio.
+- Razonamiento abductivo: visto un efecto, ¿cuál es la causa más probable?
+- Tiene mucho que ver con la teoría de la decisión
+
+
+## Más sobre peces en el lago
+
+Toma números entre 1000 y 10000 (muchos). Supón que es un número _desconocido_ de peces en un lago. Para cada valor, toma 100 peces, márcalos y vuelve a pescar 100 peces. 
+
+¿Hay relación entre el número medio de recapturas y el número total de peces en el lago (supuestamente desconocido)?
+
+
+
+
+## Ramas de la estadística
+
+- Descriptiva (estática y poco interesante)
+- Estadística pública (censos, muestras, encuestas, etc.)
+- Inferencia estadística (a lo que me refiero más arriba: ¡la induccción!), que puede ser frecuentista o bayesiana
+
+Lo que veremos hoy (y casi todo el ML) es frecuentista
+
+
+
+# Pruebas de hipótesis
+
+
+## ¿Normal o excepcional?
+
+Tiramos una moneda 100 veces y tenemos 60 caras... ¿es eso normal si $p=0.5$?
+
+```{r, fig.height=3.5}
+res <- rbinom(1000, 100, 0.5)
+hist(res, breaks = 30)
+abline(v = 60, col = "red")
+```
+
+
+
+## El famoso p-valor
+
+
+Se puede estimar $P(X \ge 60)$ así:
+```{r}
+mean(res > 59.5)
+```
+¡Ese es el p-valor!
+
+
+
+## Más sobre el p-valor
+
+* Es el resultado de comparar un valor observado con una población _normal_.
+
+* Otro ejemplo: te haces un análisis de sangre y tienes $x$ unidades de glucosa por mililitro. ¿Es eso _normal_? Tienes que compararlo con la distribución de la concentración de glucosa de una población _sana_.
+
+* En situaciones como la del ejemplo, tienes que medir (a sujetos); en otras, como la moneda, podemos simular.
+
+
+
+
+## Ya que sabemos de distribuciones...
+
+... el p-valor se puede calcular también así (sin simulaciones):
+```{r}
+1 - pbinom(59.5, 100, 0.5)
+```
+
+Eso es porque sabemos que la distribución de una tirada de monedas es binomial (¿y si no?).
+
+
+
+## Pero la prueba es tan habitual que...
+
+... está empaquetada en R:
+```{r}
+binom.test(60, 100, 0.5, "greater")
+```
+
+
+## O bien, usando una aproximación
+
+```{r}
+prop.test(60, 100, p = 0.5, alternative = "greater")
+```
+
+`prop.test` compara proporciones: por ejemplo, dos porteros según el número de paradas vs tiros a puerta.
+
+
+
+## Digresión: normal y binomial
+
+La distribución binomial puede aproximarse por una normal:
+
+```{r, fig.height=4}
+res <- rbinom(1000, 100, 0.5) / 100   # proporciones
+hist(res, breaks = 30, freq = FALSE, main = "")
+abline(v = 0.6, col = "red")
+curve(dnorm(x, 0.5, 0.5 / 10), from = 0.3, to = 0.7, col = "blue", add = T)
+```
+
+
+## Eso justificaba el uso de la normal...
+
+... en la época anterior a los ordenadores:
+```{r}
+1 - pnorm(0.6, 0.5, 0.5 / 10)
+```
+
+## Teoría de la decisión
+
+- Hemos visto (de muchas maneras) que el p-valor es como del 2%
+- ¿Nos creemos que $p = 0.5$?
+- Típicamente, se exige que el p-valor exceda el 5% para _no rechazar la hipótesis nula_.
+- Error de tipo I: rechazar la hipótesis nula cuando es cierta (digamos que ocurre el 5% de las veces)
+- Error de tipo II: aceptar una hipótesis nula cuando es falsa
+- Pero la teoría de la decisión es más que eso: impacto económico, etc.
+
+
+## Características (irreales) de nuestro ejemplo
+
+- Las tiradas son independientes
+- Tienen todas la misma distribución (y conocida), Bernuilli
+- Podemos hacer más y más tiradas
+- ¡Esto es muy atípico!
+
+
+## Más pruebas de hipótesis clásicas
+
+- Tienes datos (números): ¿proceden de una distribución normal de media/varianza conocida?
+- Tienes datos (números): ¿proceden de una distribución normal de media conocida (y varianza desconocida)?
+- Tienes dos secuencias de números: ¿tienen la misma media? (Véase la prueba de Student)
+- Tienes una secuencia de números: ¿tienen una distribución normal?
+- Tienes dos secuencias de números: ¿tienen la misma distribución?
+- Tienes dos secuencias de números: ¿tienen la misma varianza?
+
+
+## Estrategias para implementar pruebas de hipótesis
+
+- Buscar en internet si en R (u otro lugar) está implementada
+- Hacer muestreos y calcular los p-valores mediante simulación
+- Preguntar a alguien que sepa de eso
+- ¡Preguntarte si te crees los resultados o no!
+
+
+## Ejercicio: paradas de porteros
+
+- Busca "porcentaje paradas porteros liga española" en Google y entra a la página de 20 minutos
+- Compara (usando `prop.test`) dos porteros: ¿son _significativamente_ distintos?
+- Pregúntate: ¿son las _tiradas_ "independientes"? ¿Tienen la misma distribución?
+
+
+## Otras cuestiones
+* ¿Podemos comparar la tasa de paro de dos provincias?
+* ¿Podemos comparar el sueldo de hombres y mujeres con una prueba de hipótesis de las anteriores?
+
+
+
+## Potencia de una prueba
+
+- La potencia es la probabilidad de distinguir un efecto (diferencia) real
+- Depende de tres factores:
+  - El número de muestras (cuanto más muetras, más potencia)
+  - La diferencia entre las muestras (cuanto más grande, más potencia)
+  - La varianza (cuando mayor la varianza, menos potencia)

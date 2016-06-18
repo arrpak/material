@@ -1,0 +1,5 @@
+library(agricolae)
+set.seed(123)
+x <- rnorm(100, mean = 2, sd=1)
+tmp <- hist(x, plot=FALSE)
+t<-table.freq(tmp)
